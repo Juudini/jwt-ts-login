@@ -3,7 +3,7 @@ version: "3.8"
 services:
     db:
         image: mysql:latest
-        container_name: my-mysql-db
+        container_name: jwt-login-db
         restart: always
         environment:
             - MYSQL_USER=${DB_USER}
