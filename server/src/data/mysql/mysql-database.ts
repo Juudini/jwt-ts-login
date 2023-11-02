@@ -6,7 +6,14 @@ const connection = mysql.createPool({
     user: envs.DB_USER,
     password: envs.DB_PASSWORD,
     database: envs.DB_DATABASE,
-    port: envs.DB_PORT
+    port: envs.DB_PORT_DOCKER,
+    waitForConnections: true,
+    connectionLimit: 10,
+    maxIdle: 10,
+    idleTimeout: 60000,
+    queueLimit: 0,
+    enableKeepAlive: true,
+    keepAliveInitialDelay: 0
 });
 
 export default connection;
