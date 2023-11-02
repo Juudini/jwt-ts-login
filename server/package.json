@@ -15,17 +15,21 @@
   "author": "Juan Debandi",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.1",
     "@types/cors": "^2.8.15",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.20",
     "@types/morgan": "^1.9.7",
     "@types/mysql": "^2.15.23",
     "@types/node": "^20.8.9",
+    "@types/passport": "^1.0.14",
+    "@types/passport-jwt": "^3.0.12",
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-optimize-regex": "^1.2.1",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-unicorn": "^49.0.0",
+    "morgan": "^1.10.0",
     "prettier": "^3.0.3",
     "rimraf": "^5.0.5",
     "ts-node-dev": "^2.0.0",
@@ -33,52 +37,55 @@
     "unicorn": "^0.0.1"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "env-var": "^7.4.1",
     "express": "^4.18.2",
-    "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "mysql2": "^3.6.2",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1",
     "winston": "^3.11.0"
   },
   "eslintConfig": {
-      "parser": "@typescript-eslint/parser",
-      "extends": [
-          "eslint:recommended",
-          "plugin:@typescript-eslint/recommended",
-          "plugin:prettier/recommended",
-          "plugin:unicorn/recommended",
-          "plugin:optimize-regex/recommended"
-      ],
-      "plugins": [
-          "prettier",
-          "@typescript-eslint",
-          "unicorn",
-          "security",
-          "optimize-regex"
-      ],
-      "rules": {
-          "unicorn/empty-brace-spaces": "error",
-          "unicorn/no-new-array": "error",
-          "unicorn/no-array-reduce": "error",
-          "unicorn/no-array-callback-reference": "error",
-          "unicorn/prefer-spread": "error",
-          "unicorn/no-instanceof-array": "error",
-          "unicorn/no-new-buffer": "error",
-          "unicorn/no-for-loop": "error",
-          "unicorn/consistent-destructuring": "error",
-          "unicorn/consistent-function-scoping": "error",
-          "unicorn/prefer-module": "off",
-          "unicorn/no-await-expression-member": "error",
-          "unicorn/no-static-only-class": "off",
-          "unicorn/prevent-abbreviations": "off",
-          "unicorn/import-style": "off",
-          "unicorn/no-null": "off",
-          "unicorn/prefer-number-properties": "off",
-          "optimize-regex/optimize-regex": "warn",
-          "@typescript-eslint/no-explicit-any": "off",
-          "unicorn/filename-case": "off"
-      }
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:prettier/recommended",
+      "plugin:unicorn/recommended",
+      "plugin:optimize-regex/recommended"
+    ],
+    "plugins": [
+      "prettier",
+      "@typescript-eslint",
+      "unicorn",
+      "security",
+      "optimize-regex"
+    ],
+    "rules": {
+      "unicorn/empty-brace-spaces": "error",
+      "unicorn/no-new-array": "error",
+      "unicorn/no-array-reduce": "error",
+      "unicorn/no-array-callback-reference": "error",
+      "unicorn/prefer-spread": "error",
+      "unicorn/no-instanceof-array": "error",
+      "unicorn/no-new-buffer": "error",
+      "unicorn/no-for-loop": "error",
+      "unicorn/consistent-destructuring": "error",
+      "unicorn/consistent-function-scoping": "error",
+      "unicorn/prefer-module": "off",
+      "unicorn/no-await-expression-member": "error",
+      "unicorn/no-static-only-class": "off",
+      "unicorn/prevent-abbreviations": "off",
+      "unicorn/import-style": "off",
+      "unicorn/no-null": "off",
+      "unicorn/prefer-number-properties": "off",
+      "optimize-regex/optimize-regex": "warn",
+      "@typescript-eslint/no-explicit-any": "off",
+      "unicorn/filename-case": "off"
+    }
   }
 }
