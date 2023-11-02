@@ -1,12 +1,12 @@
-import { Validators } from "../../shared/validators";
+import { Validators } from "../../";
 
-export class SignUpUserDto {
+export class SignupUserDto {
     constructor(
         public username: string,
         public email: string,
         public password: string
     ) {}
-    static create(object: { [key: string]: any }): [string?, SignUpUserDto?] {
+    static create(object: { [key: string]: any }): [string?, SignupUserDto?] {
         const { username, email, password } = object;
 
         if (!username) return ["Missing name"];
@@ -19,6 +19,8 @@ export class SignUpUserDto {
 
         if (password.length < 6) return ["Password too short"];
 
-        return [undefined, new SignUpUserDto(username, email, password)];
+        if (!Validators.password.test(password)) return ["Password is not valid"];
+
+        return [undefined, new SignupUserDto(username, email, password)];
     }
 }
