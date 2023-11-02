@@ -1,12 +1,11 @@
-import { Request, Response, Router } from "express";
+import { Router } from "express";
+import { AuthRoutes } from "./auth/auth.routes";
 
-export class AppRouters {
-    static get() {
+export class AppRoutes {
+    static get routes(): Router {
         const router = Router();
 
-        router.use("/ping", (_req: Request, res: Response) => {
-            res.json({ message: "pong" });
-        });
+        router.use("/api/sessions", AuthRoutes.routes);
 
         return router;
     }
