@@ -19,10 +19,11 @@ export class UserModel {
         const { username, email, password } = signupUserDto;
         try {
             const query = "INSERT INTO user (username, email, password) VALUES (?, ?, ?)";
-            const resQuery: any = await this.connection.query(query, [username, email, password]);
+
+            const [resQuery]: any = await this.connection.query(query, [username, email, password]);
 
             const userData = {
-                id: resQuery[0].insertId,
+                id: resQuery.insertId,
                 username,
                 email,
                 password
@@ -38,8 +39,10 @@ export class UserModel {
     findOne = async (email: string): Promise<SignupUserDto | {}> => {
         try {
             const query = "SELECT id_user,username,password FROM user WHERE email = ?";
-            const result = await this.connection.query(query, [email]);
-            return result[0];
+
+            const [result] = await this.connection.query(query, [email]);
+
+            return result;
         } catch (err) {
             logger.error(err);
             throw CustomError.internalServer();
@@ -49,8 +52,10 @@ export class UserModel {
     findEmail = async (email: string): Promise<boolean> => {
         try {
             const query = "SELECT email FROM user WHERE email = ?";
-            const result = await this.connection.query(query, [email]);
-            return Array.isArray(result[0]) && result[0].length > 0;
+
+            const [result] = await this.connection.query(query, [email]);
+
+            return Array.isArray(result) && result.length > 0;
         } catch (err) {
             logger.error(err);
             throw CustomError.internalServer();

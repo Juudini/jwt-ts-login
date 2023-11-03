@@ -16,19 +16,17 @@ export class AuthDatasourceImpl implements AuthDatasource {
     signin = async (signinUserDto: SigninUserDto): Promise<UserEntity> => {
         const { email, password } = signinUserDto;
         try {
-            //Todo: Arreglar el :any
-            const user: any = await this.userModel.findOne(email);
+            const [user]: any = await this.userModel.findOne(email);
 
             if (!user) throw CustomError.badRequest("Email not exists");
 
-            const isMatch = await this.comparePassword(password, user[0].password);
-            console.log(isMatch, "res?");
+            const isMatch = await this.comparePassword(password, user.password);
 
             if (!isMatch) throw CustomError.badRequest("Password is not valid");
 
             const userData = {
-                id: user[0].id_user,
-                username: user[0].username,
+                id: user.id_user,
+                username: user.username,
                 email,
                 password
             };
