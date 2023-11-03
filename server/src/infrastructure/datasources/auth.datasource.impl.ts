@@ -3,8 +3,8 @@ import { AuthDatasource, BcryptAdapter, CustomError, SigninUserDto, SignupUserDt
 import { UserModel } from "../../data";
 import { UserMapper } from "../";
 
-type HashFunction = (password: string) => string;
-type CompareFunction = (password: string, hashed: string) => boolean;
+type HashFunction = (password: string) => Promise<string>;
+type CompareFunction = (password: string, hashed: string) => Promise<boolean>;
 
 export class AuthDatasourceImpl implements AuthDatasource {
     constructor(
@@ -21,9 +21,8 @@ export class AuthDatasourceImpl implements AuthDatasource {
 
             if (!user) throw CustomError.badRequest("Email not exists");
 
-            const hashedPassword = this.hashPassword(password);
-
-            const isMatch = this.comparePassword(user[0].password, hashedPassword);
+            const isMatch = await this.comparePassword(password, user[0].password);
+            console.log(isMatch, "res?");
 
             if (!isMatch) throw CustomError.badRequest("Password is not valid");
 
@@ -48,7 +47,7 @@ export class AuthDatasourceImpl implements AuthDatasource {
 
             if (isEmail) throw CustomError.badRequest("Already exists");
 
-            const hashedPassword = this.hashPassword(password);
+            const hashedPassword = await this.hashPassword(password);
 
             const user = {
                 username,
