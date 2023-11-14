@@ -14,8 +14,8 @@ const jwtPassportInitialize = () => {
             async (jwt_payload, done) => {
                 try {
                     return done(null, jwt_payload);
-                } catch (error) {
-                    done(error);
+                } catch (err) {
+                    done(err);
                 }
             }
         )

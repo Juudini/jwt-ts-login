@@ -16,7 +16,7 @@ export class AuthDatasourceImpl implements AuthDatasource {
     signin = async (signinUserDto: SigninUserDto): Promise<UserEntity> => {
         const { email, password } = signinUserDto;
         try {
-            const [user]: any = await this.userModel.findOne(email);
+            const [user]: any = await this.userModel.findOneByEmail(email);
 
             if (!user) throw CustomError.badRequest("Email not exists");
 
@@ -32,8 +32,8 @@ export class AuthDatasourceImpl implements AuthDatasource {
             };
 
             return UserMapper.userEntityFromObject(userData);
-        } catch (error) {
-            logger.error(error);
+        } catch (err) {
+            logger.error(err);
             throw CustomError.internalServer();
         }
     };
@@ -56,8 +56,8 @@ export class AuthDatasourceImpl implements AuthDatasource {
             const userData = await this.userModel.create(user);
 
             return UserMapper.userEntityFromObject(userData);
-        } catch (error) {
-            logger.error(error);
+        } catch (err) {
+            logger.error(err);
             throw CustomError.internalServer();
         }
     };
