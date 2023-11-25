@@ -3,10 +3,11 @@ version: "3.8"
 services:
     db:
         image: mysql:latest
-        container_name: jwt_login_db
+        container_name: jwt-login-db
         restart: always
         environment:
-            - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-            - MYSQL_DATABASE=${DB_DATABASE}
+            - MYSQL_USER=${DB_USER}
+            - MYSQL_PASSWORD=${DB_PASSWORD}
+            - MYSQL_DATABASE=${DATABASE}
         ports:
-            - "${DOCKER_DB_PORT}:${DB_PORT}"
+            - "${DB_PORT}:${DOCKER_DB_PORT}"
