@@ -4,14 +4,12 @@
     "description": "API for Auth App",
     "main": "src/app.ts",
     "scripts": {
-        "test": "jest",
-        "test:watch": "jest --watch",
         "lint": "eslint src",
-        "test:coverage": "jest --coverage",
-        "dev": "ts-node-dev --respawn src/app.ts",
+        "test": "jest --detectOpenHandle",
         "build": "rimraf ./build && tsc",
-        "start": "node build/app.js",
-        "create-db-table": "node build/src/data/mysql/create-database-table.js"
+        "create-db-table": "node build/src/data/mysql/create-database-table.js",
+        "dev": "ts-node-dev --respawn --env-file .env.dev src/app.ts",
+        "start": "node --env-file .env build/app.js"
     },
     "keywords": [
         "auth login",
