@@ -28,7 +28,6 @@ export class UserModel {
                 email,
                 password
             };
-
             return userData;
         } catch (err) {
             logger.error(err);
@@ -36,7 +35,7 @@ export class UserModel {
         }
     };
 
-    findOne = async (email: string): Promise<SignupUserDto | {}> => {
+    findOneByEmail = async (email: string): Promise<SignupUserDto | object> => {
         try {
             const query = "SELECT id_user,username,password FROM user WHERE email = ?";
 

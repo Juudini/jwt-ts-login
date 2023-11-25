@@ -26,9 +26,9 @@ class DBInitializer {
         `);
             await connection.commit();
             logger.info("Database and table created successfully.");
-        } catch (error) {
+        } catch (err) {
             await connection.rollback();
-            logger.error(error);
+            logger.error(err);
         } finally {
             connection.end();
         }
