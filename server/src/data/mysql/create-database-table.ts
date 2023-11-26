@@ -7,7 +7,7 @@ class DBInitializer {
             host: envs.DB_HOST,
             user: envs.DB_USER,
             password: envs.DB_PASSWORD,
-            port: envs.DB_PORT_DOCKER
+            port: envs.DOCKER_PORT
         };
 
         const connection = await mysql.createConnection(dbConfig);
