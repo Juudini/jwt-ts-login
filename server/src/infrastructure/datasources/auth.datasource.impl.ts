@@ -1,5 +1,13 @@
 import { logger } from "../../config";
-import { AuthDatasource, BcryptAdapter, CustomError, SigninUserDto, SignupUserDto, UserEntity } from "../../domain";
+import {
+    AuthDatasource,
+    BcryptAdapter,
+    CustomError,
+    SigninUserDto,
+    SignupUserDto,
+    UserEntity,
+    UserData
+} from "../../domain";
 import { UserModel } from "../../data";
 import { UserMapper } from "../";
 
@@ -16,19 +24,19 @@ export class AuthDatasourceImpl implements AuthDatasource {
     signin = async (signinUserDto: SigninUserDto): Promise<UserEntity> => {
         const { email, password } = signinUserDto;
         try {
-            const [user]: any = await this.userModel.findOneByEmail(email);
+            const isUser: UserData = await this.userModel.findOneByEmail(email);
 
-            if (!user) throw CustomError.badRequest("Email not exists");
+            if (!isUser) throw CustomError.badRequest("Email not exists");
 
-            const isMatch = await this.comparePassword(password, user.password);
+            const isMatch = await this.comparePassword(password, isUser.password);
 
             if (!isMatch) throw CustomError.badRequest("Password is not valid");
 
-            const userData = {
-                id: user.id_user,
-                username: user.username,
-                email,
-                password
+            const userData: UserData = {
+                id: isUser.id,
+                username: isUser.username,
+                email: isUser.email,
+                password: isUser.password
             };
 
             return UserMapper.userEntityFromObject(userData);
@@ -41,7 +49,7 @@ export class AuthDatasourceImpl implements AuthDatasource {
     signup = async (signupUserDto: SignupUserDto): Promise<UserEntity> => {
         const { username, email, password } = signupUserDto;
         try {
-            const isEmail = await this.userModel.findEmail(email);
+            const isEmail: boolean = await this.userModel.findEmail(email);
 
             if (isEmail) throw CustomError.badRequest("Already exists");
 
@@ -53,7 +61,7 @@ export class AuthDatasourceImpl implements AuthDatasource {
                 password: hashedPassword
             };
 
-            const userData = await this.userModel.create(user);
+            const userData: UserData = await this.userModel.create(user);
 
             return UserMapper.userEntityFromObject(userData);
         } catch (err) {
