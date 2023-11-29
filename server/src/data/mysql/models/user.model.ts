@@ -1,33 +1,30 @@
 import { logger } from "../../../config";
 import { SignupUserDto, CustomError } from "../../../domain";
-import connection from "../mysql-database";
-
-interface UserData {
-    id: string;
-    username: string;
-    email: string;
-}
+import { PrismaClient } from "@prisma/client";
+import { UserData } from "../../../domain";
 
 export class UserModel {
-    private readonly connection;
+    private readonly prisma;
 
     constructor() {
-        this.connection = connection;
+        this.prisma = new PrismaClient();
     }
 
     create = async (signupUserDto: SignupUserDto): Promise<UserData> => {
         const { username, email, password } = signupUserDto;
         try {
-            const query = "INSERT INTO user (username, email, password) VALUES (?, ?, ?)";
+            const createdUser: UserData = await this.prisma.user.create({
+                data: { email, password, username },
+                select: { id: true, username: true, email: true, password: true }
+            });
 
-            const [resQuery]: any = await this.connection.query(query, [username, email, password]);
-
-            const userData = {
-                id: resQuery.insertId,
-                username,
-                email,
-                password
+            const userData: UserData = {
+                id: createdUser.id,
+                username: createdUser.username,
+                email: createdUser.email,
+                password: createdUser.password
             };
+
             return userData;
         } catch (err) {
             logger.error(err);
@@ -35,13 +32,11 @@ export class UserModel {
         }
     };
 
-    findOneByEmail = async (email: string): Promise<SignupUserDto | object> => {
+    findOneByEmail = async (email: string): Promise<UserData> => {
         try {
-            const query = "SELECT id_user,username,password FROM user WHERE email = ?";
+            const result: UserData | null = await this.prisma.user.findUnique({ where: { email: email } });
 
-            const [result] = await this.connection.query(query, [email]);
-
-            return result;
+            return result as UserData;
         } catch (err) {
             logger.error(err);
             throw CustomError.internalServer();
@@ -50,11 +45,9 @@ export class UserModel {
 
     findEmail = async (email: string): Promise<boolean> => {
         try {
-            const query = "SELECT email FROM user WHERE email = ?";
+            const result: number = await this.prisma.user.count({ where: { email } });
 
-            const [result] = await this.connection.query(query, [email]);
-
-            return Array.isArray(result) && result.length > 0;
+            return result > 0;
         } catch (err) {
             logger.error(err);
             throw CustomError.internalServer();
