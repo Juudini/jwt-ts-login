@@ -5,6 +5,7 @@
 /.vscode
 /logs
 /secret
+/coverage
 # Files
 package-lock.json
 yarn.lock
