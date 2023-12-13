@@ -1,11 +1,11 @@
-import { Validators } from "../../";
+import { Validators } from "../../shared/validators";
 
-export class SigninUserDto {
+export class SignInUserDto {
     constructor(
         public email: string,
         public password: string
     ) {}
-    static create(object: { [key: string]: any }): [string?, SigninUserDto?] {
+    static create(object: { [key: string]: any }): [string?, SignInUserDto?] {
         const { email, password } = object;
 
         if (!email) return ["Missing email"];
@@ -14,6 +14,6 @@ export class SigninUserDto {
 
         if (!password) return ["Missing password"];
 
-        return [undefined, new SigninUserDto(email, password)];
+        return [undefined, new SignInUserDto(email, password)];
     }
 }

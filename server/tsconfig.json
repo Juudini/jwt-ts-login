@@ -1,9 +1,9 @@
 {
     "compilerOptions": {
-        "target": "ES2021",
+        "target": "es2021",
         "module": "CommonJS",
-        "outDir": "./build",
-        "rootDir": "./",
+        "outDir": "./build/src",
+        "rootDir": "./src",
         "resolveJsonModule": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
@@ -23,6 +23,12 @@
         "noFallthroughCasesInSwitch": true,
         "skipLibCheck": true
     },
-    "include": ["./src"],
-    "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"]
+    "include": ["./src/**/*"],
+    "exclude": [
+        "./public",
+        "node_modules",
+        "./.vscode",
+        "**/*.spec.ts",
+        "**/*.test.ts"
+    ]
 }
