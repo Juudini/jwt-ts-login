@@ -7,9 +7,9 @@
         "lint": "eslint src",
         "test": "jest --detectOpenHandle",
         "build": "rimraf ./build && tsc",
-        "create-db-table": "node build/src/data/mysql/create-database-table.js",
-        "dev": "ts-node-dev --respawn --env-file .env.dev src/app.ts",
-        "start": "node --env-file .env build/app.js"
+        "migrate": "npx prisma migrate dev --name postdb",
+        "dev": "ts-node-dev --respawn src/app.ts",
+        "start": "node build/app.js"
     },
     "keywords": [
         "auth login",
@@ -68,4 +68,3 @@
         "winston": "^3.11.0"
     }
 }
-
