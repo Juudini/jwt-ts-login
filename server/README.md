@@ -23,6 +23,12 @@ pnpm install
 2. Start project db migration.
 
 ```bash
+pnpm run migrate
+```
+
+or
+
+```bash
 npx prisma migrate dev --name init
 
 ```
